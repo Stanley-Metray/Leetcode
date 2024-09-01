@@ -1,4 +1,4 @@
-// Function structure
+
 function wordPattern(pattern, s) {
     let mapP = new Map();
     let mapWords = new Map();
