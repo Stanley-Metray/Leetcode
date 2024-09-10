@@ -1,3 +1,5 @@
+console.clear();
+
 function ListNode(val = undefined, next = null) {
     this.val = val;
     this.next = next;
