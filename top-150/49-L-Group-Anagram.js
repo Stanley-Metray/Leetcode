@@ -1,12 +1,13 @@
-// Function structure
+console.clear();
+
 function groupAnagrams(strs) {
-    let result = [];
+   
     let map = new Map();
 
     for(let i=0; i<strs.length; i++)
     {
         let str = strs[i].split('').sort().join('');
-       
+
         if(map.has(str))
         {
             let arr = map.get(str);
@@ -16,11 +17,14 @@ function groupAnagrams(strs) {
         else
             map.set(str, [strs[i]]);
     }
-    
-    for(let [key,value] of map)
+
+    const result = [];
+
+    for([key, value] of map)
         result.push(value);
 
     return result;
+
 }
 
 // Test cases
