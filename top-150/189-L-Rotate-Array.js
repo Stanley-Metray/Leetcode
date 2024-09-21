@@ -2,22 +2,25 @@
 console.clear();
 
 function rotate(nums, k) {
-    k = k%nums.length;
-    nums.reverse();
-    for(let i=0; i<Math.floor(k/2); i++)
-    {
-        let t= nums[i];
-        nums[i]=nums[k-i-1];
-        nums[k-i-1]=t;
+    k = Math.floor(k % nums.length);
+
+    if (k === 0)
+        return nums;
+
+    for (let i = 0; i < Math.floor((nums.length - k) / 2); i++) {
+        let temp = nums[i];
+        nums[i] = nums[nums.length - k - i - 1];
+        nums[nums.length - k - i - 1] = temp;
     }
 
-    for(let i=k; i<Math.floor((nums.length+k)/2); i++)
-    {
-        let t = nums[i];
-        nums[i] = nums[nums.length+k-i-1];
-        nums[nums.length+k-i-1] = t;
+    nums.reverse();
+
+    for (let i = 0; i < Math.floor(k / 2); i++) {
+        let temp = nums[i];
+        nums[i] = nums[k - i - 1];
+        nums[k - i - 1] = temp;
     }
-    
+
     return nums;
 }
 

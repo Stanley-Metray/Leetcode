@@ -1,21 +1,19 @@
-// Function structure
+console.clear();
+
 function canConstruct(ransomNote, magazine) {
     let map = new Map();
 
-    for (let i = 0; i < ransomNote.length; i++) {
-        if (map.has(ransomNote[i]))
-            map.set(ransomNote[i], map.set(ransomNote[i], map.get(ransomNote[i]) + 1));
+    for (let i = 0; i < magazine.length; i++)
+        if (map.has(magazine[i]))
+            map.set(magazine[i], map.get(magazine[i]) + 1);
         else
-            map.set(ransomNote[i], 1);
-    }
+            map.set(magazine[i], 1);
 
-    for (let i = 0; i < magazine.length; i++) {
-        if (!map.has(magazine[i]))
+    for (let i = 0; i < ransomNote.length; i++) {
+        if (!map.has(ransomNote[i]) || map.has(ransomNote[i]) && map.get(ransomNote[i]) < 1)
             return false;
-        else if (map.has(magazine[i]) && map.get(magazine[i]) > 0)
-            map.set(magazine[i], map.get(magazine[i]) - 1);
         else
-            return false;
+            map.set(ransomNote[i], map.get(ransomNote[i]) - 1);
     }
     return true;
 }
