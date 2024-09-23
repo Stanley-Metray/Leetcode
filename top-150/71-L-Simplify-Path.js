@@ -41,7 +41,7 @@ console.log("Test Case 6: ", simplifyPath("/a/./b/../../c/"));
 // Expected Output: "/c"
 
 console.log("Test Case 7: ", simplifyPath("/a//b////c/d//././/.."));      
-// Expected Output: "/a/b"
+// Expected Output: "/a/b/c"
 
 console.log("Test Case 8: ", simplifyPath("/./././"));                    
 // Expected Output: "/"
