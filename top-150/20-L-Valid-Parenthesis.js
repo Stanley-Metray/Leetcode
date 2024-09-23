@@ -1,22 +1,21 @@
 console.clear();
 
 function isValid(s) {
-    let stack = [];
+    if (Math.floor(s.length % 2) !== 0) return false;
 
-    if (Math.floor(s.length % 2) !== 0)
-        return false;
+    const stack = [];
 
     for (let i = 0; i < s.length; i++) {
-        if (s[i] === '(' || s[i] === '{' || s[i] === '[')
+        if (s[i] === '(' || s[i] === '[' || s[i] === '{')
             stack.push(s[i]);
         else {
-            let top = stack.length;
+            let l = stack.length - 1;
 
-            if (top === 0 || s[i] === ')' && stack[top - 1] !== '('
-                || s[i] === '}' && stack[top - 1] !== '{'
-                || s[i] === ']' && stack[top - 1] !== '[') {
+            if (stack.length > 0 && s[i] === ')' && stack[l] !== '('
+                || s[i] === ']' && stack[l] !== '['
+                || s[i] === '}' && stack[l] !== '{')
                 return false;
-            }
+
             stack.pop();
         }
     }

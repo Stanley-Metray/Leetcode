@@ -1,22 +1,18 @@
 console.clear();
 
 function twoSum(numbers, target) {
-    let left = 0;
-    let right = numbers.length - 1;
-    let result = new Array(2).fill(-1);
-    while (left < right) {
-        let sum = numbers[left] + numbers[right];
-        if (sum === target) {
-            result[0] = left + 1;
-            result[1] = right + 1;
-        }
 
-        if (target > sum)
-            left++;
-        else
-            right--;
+    const map = new Map();
+
+    for (let i = 0; i < numbers.length; i++) {
+        let difference = target - numbers[i];
+
+        if (map.has(difference))
+            return [map.get(difference) + 1, i + 1];
+
+        if (!map.has(numbers[i]))
+            map.set(numbers[i], i);
     }
-    return result;
 }
 
 // Test cases
