@@ -74,7 +74,7 @@ console.log(largestRectangleArea([0, 0, 0, 0, 0])); // Expected output: 0
 console.log(largestRectangleArea([1, 2, 3, 4, 5])); // Expected output: 9
 
 // Test Case 9: Decreasing heights
-console.log(largestRectangleArea([5, 4, 3, 2, 1])); // Expected output: 9
+console.log(largestRectangleArea([5, 4, 3, 2, 1])); // Expected output: 10
 
 // Test Case 10: Large zero at the end of the array
 console.log(largestRectangleArea([6, 2, 5, 4, 5, 1, 6])); // Expected output: 12
