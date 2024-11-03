@@ -1,73 +1,78 @@
 console.clear();
-// PAGE 6
 
-console.clear();
+function mergeSort(arr) {
+    if (arr.length < 2) return arr;
 
-var findMin = function (nums) {
-    let left = 0;
-    let right = nums.length-1;
+    let mid = Math.floor(arr.length / 2);
 
-    while(left<right)
-    {
-        let mid = Math.floor((right+left)/2);
+    let leftArray = arr.slice(0, mid);
+    let rightArray = arr.slice(mid);
 
-        if(nums[mid]>nums[right])
-            left = mid+1;
+    leftArray = mergeSort(leftArray);
+    rightArray = mergeSort(rightArray);
+
+    return merge(leftArray, rightArray);
+}
+
+function merge(leftArray, rightArray) {
+    const result = [];
+
+    let i = 0, j = 0;
+
+    while (i < leftArray.length && j < rightArray.length) {
+        if (leftArray[i] < rightArray[j])
+            result.push(leftArray[i++]);
         else
-            right = mid;
+            result.push(rightArray[j++]);
     }
 
-    return nums[left];
-};
+    while (i < leftArray.length)
+        result.push(leftArray[i++]);
+
+    while (j < rightArray.length)
+        result.push(rightArray[j++]);
+
+    return result;
+}
 
 // Test cases
 
-// Test case 1: Basic case with a rotated array
-console.log("Test Case 1:", findMin([3, 4, 5, 1, 2]));
-// Expected output: 1
-// Explanation: The original array was [1,2,3,4,5] rotated 3 times, so the minimum is 1.
+// Test case 1: Basic case with unsorted array
+console.log("Test Case 1:", mergeSort([3, 1, 4, 1, 5, 9]));
+// Expected output: [1, 1, 3, 4, 5, 9]
 
-// Test case 2: Array rotated multiple times
-console.log("Test Case 2:", findMin([4, 5, 6, 7, 0, 1, 2]));
-// Expected output: 0
-// Explanation: The original array was [0,1,2,4,5,6,7] rotated 4 times, so the minimum is 0.
+// Test case 2: Already sorted array
+console.log("Test Case 2:", mergeSort([1, 2, 3, 4, 5]));
+// Expected output: [1, 2, 3, 4, 5]
 
-// Test case 3: Array not rotated
-console.log("Test Case 3:", findMin([11, 13, 15, 17]));
-// Expected output: 11
-// Explanation: The array is already in ascending order, so the minimum is the first element, 11.
+// Test case 3: Array with duplicates
+console.log("Test Case 3:", mergeSort([5, 3, 8, 3, 9, 1, 1]));
+// Expected output: [1, 1, 3, 3, 5, 8, 9]
 
-// Test case 4: Array with only two elements
-console.log("Test Case 4:", findMin([2, 1]));
-// Expected output: 1
-// Explanation: The original array was [1, 2] rotated once, so the minimum is 1.
+// Test case 4: Empty array
+console.log("Test Case 4:", mergeSort([]));
+// Expected output: []
 
-// Test case 5: Single element array
-console.log("Test Case 5:", findMin([1]));
-// Expected output: 1
-// Explanation: There's only one element, so the minimum is 1.
+// Test case 5: Array with one element
+console.log("Test Case 5:", mergeSort([42]));
+// Expected output: [42]
 
-// Test case 6: Array with multiple rotations, larger range
-console.log("Test Case 6:", findMin([9, 10, 12, 14, 16, 18, 4, 6, 8]));
-// Expected output: 4
-// Explanation: The minimum is 4 after rotating the original array.
+// Test case 6: Array with negative numbers
+console.log("Test Case 6:", mergeSort([7, -5, 3, -1, 0]));
+// Expected output: [-5, -1, 0, 3, 7]
 
-// Test case 7: Array rotated once
-console.log("Test Case 7:", findMin([2, 3, 4, 5, 6, 1]));
-// Expected output: 1
-// Explanation: The original array was [1,2,3,4,5,6] rotated once, so the minimum is 1.
+// Test case 7: Array with all elements the same
+console.log("Test Case 7:", mergeSort([2, 2, 2, 2, 2]));
+// Expected output: [2, 2, 2, 2, 2]
 
-// Test case 8: Array rotated at the midpoint
-console.log("Test Case 8:", findMin([5, 6, 7, 8, 1, 2, 3, 4]));
-// Expected output: 1
-// Explanation: The minimum is 1 after midpoint rotation.
+// Test case 8: Array with floating point numbers
+console.log("Test Case 8:", mergeSort([3.5, 1.2, 4.8, 2.0]));
+// Expected output: [1.2, 2.0, 3.5, 4.8]
 
-// Test case 9: Large array with rotation
-console.log("Test Case 9:", findMin([15, 18, 19, 1, 3, 6, 9, 12]));
-// Expected output: 1
-// Explanation: The minimum element is 1 after the rotation.
+// Test case 9: Array with large numbers
+console.log("Test Case 9:", mergeSort([1000000, 999999, 1000001]));
+// Expected output: [999999, 1000000, 1000001]
 
-// Test case 10: Edge case with small elements
-console.log("Test Case 10:", findMin([2, 2, 2, 0, 1]));
-// Expected output: 0
-// Explanation: The minimum is 0 in this rotated array.
+// Test case 10: Array with positive and negative floating-point numbers
+console.log("Test Case 10:", mergeSort([-2.5, 3.1, 0.5, -0.1]));
+// Expected output: [-2.5, -0.1, 0.5, 3.1]
