@@ -1,79 +1,67 @@
 console.clear();
 
-function setZeroes(matrix) {
-    let firstRow = false;
-    let firstCol = false;
-
-    for (let i = 0; i < matrix.length; i++) {
-        for (let j = 0; j < matrix[0].length; j++) {
-            if (matrix[i][j] === 0) {
-                if (i === 0) firstRow = true;
-                if (j === 0) firstCol = true;
-
-                matrix[i][0] = 0;
-                matrix[0][j] = 0;
-            }
-        }
+function rotate(matrix) {
+   for(let i=0; i<matrix.length; i++)
+   {
+    for(let j=i; j<matrix[0].length; j++)
+    {
+        let temp = matrix[i][j];
+        matrix[i][j] = matrix[j][i];
+        matrix[j][i] = temp;
     }
+   }
 
-    for (let i = 1; i < matrix.length; i++) {
-        for (let j = 1; j < matrix[0].length; j++) {
-            if (matrix[i][0] === 0 || matrix[0][j] === 0)
-                matrix[i][j] = 0;
-        }
-    }
+   for(let i=0; i<matrix.length; i++)
+    matrix[i].reverse();
 
-    if (firstRow) {
-        for (let i = 0; i < matrix[0].length; i++)
-            matrix[0][i] = 0;
-    }
-
-    if (firstCol) {
-        for (let i = 0; i < matrix.length; i++)
-            matrix[i][0] = 0
-    }
-
-    return matrix;
 }
 
-// Test cases
+// Test Case 1: Standard 3x3 matrix
+let matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
+rotate(matrix);
+console.log("Test Case 1:", matrix); // Expected Output: [[7, 4, 1], [8, 5, 2], [9, 6, 3]]
 
-// Test case 1: Basic example with a zero in the middle
-console.log("Test Case 1:", setZeroes([[1, 1, 1], [1, 0, 1], [1, 1, 1]]));
-// Expected output: [[1, 0, 1], [0, 0, 0], [1, 0, 1]]
+// Test Case 2: 4x4 matrix with varying values
+matrix = [[5, 1, 9, 11], [2, 4, 8, 10], [13, 3, 6, 7], [15, 14, 12, 16]];
+rotate(matrix);
+console.log("Test Case 2:", matrix); // Expected Output: [[15, 13, 2, 5], [14, 3, 4, 1], [12, 6, 8, 9], [16, 7, 10, 11]]
 
-// Test case 2: Matrix with zeros in multiple rows and columns
-console.log("Test Case 2:", setZeroes([[0, 1, 2, 0], [3, 4, 5, 2], [1, 3, 1, 5]]));
-// Expected output: [[0, 0, 0, 0], [0, 4, 5, 0], [0, 3, 1, 0]]
+// Test Case 3: Single element matrix
+matrix = [[1]];
+rotate(matrix);
+console.log("Test Case 3:", matrix); // Expected Output: [[1]]
 
-// Test case 3: No zeros in the matrix
-console.log("Test Case 3:", setZeroes([[1, 2, 3], [4, 5, 6], [7, 8, 9]]));
-// Expected output: [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+// Test Case 4: 2x2 matrix
+matrix = [[1, 2], [3, 4]];
+rotate(matrix);
+console.log("Test Case 4:", matrix); // Expected Output: [[3, 1], [4, 2]]
 
-// Test case 4: All elements are zero
-console.log("Test Case 4:", setZeroes([[0, 0], [0, 0]]));
-// Expected output: [[0, 0], [0, 0]]
+// Test Case 5: 3x3 matrix with negative numbers
+matrix = [[-1, -2, -3], [-4, -5, -6], [-7, -8, -9]];
+rotate(matrix);
+console.log("Test Case 5:", matrix); // Expected Output: [[-7, -4, -1], [-8, -5, -2], [-9, -6, -3]]
 
-// Test case 5: Single row with a zero
-console.log("Test Case 5:", setZeroes([[1, 0, 3]]));
-// Expected output: [[0, 0, 0]]
+// Test Case 6: 4x4 matrix with zeros
+matrix = [[0, 0, 0, 0], [0, 1, 2, 0], [0, 3, 4, 0], [0, 0, 0, 0]];
+rotate(matrix);
+console.log("Test Case 6:", matrix); // Expected Output: [[0, 0, 0, 0], [0, 3, 1, 0], [0, 4, 2, 0], [0, 0, 0, 0]]
 
-// Test case 6: Single column with a zero
-console.log("Test Case 6:", setZeroes([[1], [0], [3]]));
-// Expected output: [[0], [0], [0]]
+// Test Case 7: 5x5 matrix with increasing numbers
+matrix = [[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11, 12, 13, 14, 15], [16, 17, 18, 19, 20], [21, 22, 23, 24, 25]];
+rotate(matrix);
+console.log("Test Case 7:", matrix); // Expected Output: [[21, 16, 11, 6, 1], [22, 17, 12, 7, 2], [23, 18, 13, 8, 3], [24, 19, 14, 9, 4], [25, 20, 15, 10, 5]]
 
-// Test case 7: Larger matrix with scattered zeros
-console.log("Test Case 7:", setZeroes([[1, 2, 0], [4, 5, 6], [7, 0, 9]]));
-// Expected output: [[0, 0, 0], [4, 0, 0], [0, 0, 0]]
+// Test Case 8: 3x3 matrix with a mix of positive and negative numbers
+matrix = [[1, -2, 3], [4, -5, 6], [-7, 8, 9]];
+rotate(matrix);
+console.log("Test Case 8:", matrix); // Expected Output: [[-7, 4, 1], [8, -5, -2], [9, 6, 3]]
 
-// Test case 8: Matrix with negative numbers and zeros
-console.log("Test Case 8:", setZeroes([[0, -1, 2], [3, 4, 5], [-1, -2, 0]]));
-// Expected output: [[0, 0, 0], [0, 4, 0], [0, 0, 0]]
+// Test Case 9: 2x2 matrix with identical values
+matrix = [[7, 7], [7, 7]];
+rotate(matrix);
+console.log("Test Case 9:", matrix); // Expected Output: [[7, 7], [7, 7]]
 
-// Test case 9: Matrix with only one element as zero
-console.log("Test Case 9:", setZeroes([[1, 2], [3, 0]]));
-// Expected output: [[1, 0], [0, 0]]
-
-// Test case 10: Empty matrix
-console.log("Test Case 10:", setZeroes([]));
-// Expected output: []
+// Test Case 10: 4x4 matrix with random values
+matrix = [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]];
+rotate(matrix);
+console.log("Test Case 10:", matrix); // Expected Output: [[13, 9, 5, 1], [14, 10, 6, 2], [15, 11, 7, 3], [16, 12, 8, 4]]
