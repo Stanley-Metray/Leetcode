@@ -1,74 +1,79 @@
 console.clear();
 
-function mergeSort(arr) {
-    if(arr.length<2) return arr;
+function setZeroes(matrix) {
+    let firstRow = false;
+    let firstCol = false;
 
-    let mid = Math.floor(arr.length/2);
+    for (let i = 0; i < matrix.length; i++) {
+        for (let j = 0; j < matrix[0].length; j++) {
+            if (matrix[i][j] === 0) {
+                if (i === 0) firstRow = true;
+                if (j === 0) firstCol = true;
 
-    let leftArray = arr.slice(0, mid);
-    let rightArray = arr.slice(mid);
-
-    leftArray = mergeSort(leftArray);
-    rightArray = mergeSort(rightArray);
-
-    return merge(leftArray, rightArray);
-}
-
-function merge(leftArray, rightArray) {
-    let i = 0, j = 0, result = [];
-
-    while (i < leftArray.length && j < rightArray.length) {
-        if (leftArray[i] < rightArray[j])
-            result.push(leftArray[i++]);
-        else
-            result.push(rightArray[j++]);
+                matrix[i][0] = 0;
+                matrix[0][j] = 0;
+            }
+        }
     }
 
-    while (i < leftArray.length)
-        result.push(leftArray[i++]);
+    for (let i = 1; i < matrix.length; i++) {
+        for (let j = 1; j < matrix[0].length; j++) {
+            if (matrix[i][0] === 0 || matrix[0][j] === 0)
+                matrix[i][j] = 0;
+        }
+    }
 
-    while (j < rightArray.length)
-        result.push(rightArray[j++]);
+    if (firstRow) {
+        for (let i = 0; i < matrix[0].length; i++)
+            matrix[0][i] = 0;
+    }
 
-    return result;
+    if (firstCol) {
+        for (let i = 0; i < matrix.length; i++)
+            matrix[i][0] = 0
+    }
+
+    return matrix;
 }
 
-// Test Case 1: Array with positive integers
-let arr = [4, 3, 2, 1];
-console.log("Test Case 1:", mergeSort(arr)); // Expected Output: [1, 2, 3, 4]
+// Test cases
 
-// Test Case 2: Already sorted array
-arr = [1, 2, 3, 4, 5];
-console.log("Test Case 2:", mergeSort(arr)); // Expected Output: [1, 2, 3, 4, 5]
+// Test case 1: Basic example with a zero in the middle
+console.log("Test Case 1:", setZeroes([[1, 1, 1], [1, 0, 1], [1, 1, 1]]));
+// Expected output: [[1, 0, 1], [0, 0, 0], [1, 0, 1]]
 
-// Test Case 3: Array with duplicates
-arr = [3, 5, 3, 2, 2];
-console.log("Test Case 3:", mergeSort(arr)); // Expected Output: [2, 2, 3, 3, 5]
+// Test case 2: Matrix with zeros in multiple rows and columns
+console.log("Test Case 2:", setZeroes([[0, 1, 2, 0], [3, 4, 5, 2], [1, 3, 1, 5]]));
+// Expected output: [[0, 0, 0, 0], [0, 4, 5, 0], [0, 3, 1, 0]]
 
-// Test Case 4: Array with negative numbers
-arr = [-1, -3, -2, 0, 2];
-console.log("Test Case 4:", mergeSort(arr)); // Expected Output: [-3, -2, -1, 0, 2]
+// Test case 3: No zeros in the matrix
+console.log("Test Case 3:", setZeroes([[1, 2, 3], [4, 5, 6], [7, 8, 9]]));
+// Expected output: [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 
-// Test Case 5: Array with single element
-arr = [5];
-console.log("Test Case 5:", mergeSort(arr)); // Expected Output: [5]
+// Test case 4: All elements are zero
+console.log("Test Case 4:", setZeroes([[0, 0], [0, 0]]));
+// Expected output: [[0, 0], [0, 0]]
 
-// Test Case 6: Array with all elements equal
-arr = [7, 7, 7, 7, 7];
-console.log("Test Case 6:", mergeSort(arr)); // Expected Output: [7, 7, 7, 7, 7]
+// Test case 5: Single row with a zero
+console.log("Test Case 5:", setZeroes([[1, 0, 3]]));
+// Expected output: [[0, 0, 0]]
 
-// Test Case 7: Array with a large number of elements
-arr = [100, 50, 75, 25, 90];
-console.log("Test Case 7:", mergeSort(arr)); // Expected Output: [25, 50, 75, 90, 100]
+// Test case 6: Single column with a zero
+console.log("Test Case 6:", setZeroes([[1], [0], [3]]));
+// Expected output: [[0], [0], [0]]
 
-// Test Case 8: Array with only two elements
-arr = [10, 1];
-console.log("Test Case 8:", mergeSort(arr)); // Expected Output: [1, 10]
+// Test case 7: Larger matrix with scattered zeros
+console.log("Test Case 7:", setZeroes([[1, 2, 0], [4, 5, 6], [7, 0, 9]]));
+// Expected output: [[0, 0, 0], [4, 0, 0], [0, 0, 0]]
 
-// Test Case 9: Array with negative and positive integers
-arr = [-5, -2, 0, 3, 8, -1];
-console.log("Test Case 9:", mergeSort(arr)); // Expected Output: [-5, -2, -1, 0, 3, 8]
+// Test case 8: Matrix with negative numbers and zeros
+console.log("Test Case 8:", setZeroes([[0, -1, 2], [3, 4, 5], [-1, -2, 0]]));
+// Expected output: [[0, 0, 0], [0, 4, 0], [0, 0, 0]]
 
-// Test Case 10: Empty array
-arr = [];
-console.log("Test Case 10:", mergeSort(arr)); // Expected Output: []
+// Test case 9: Matrix with only one element as zero
+console.log("Test Case 9:", setZeroes([[1, 2], [3, 0]]));
+// Expected output: [[1, 0], [0, 0]]
+
+// Test case 10: Empty matrix
+console.log("Test Case 10:", setZeroes([]));
+// Expected output: []
